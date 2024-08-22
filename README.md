@@ -8,6 +8,14 @@
 
 Setup aws cdk with cli access creds setup. Refer this [link](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html "Get Started with aws cdk")
 
+sample env:
+
+```txt
+REDIS_URL="redis url"
+INFLUENCERS_BUCKET="aws bucket"
+INFLUENCERS_KEY="file containing influencer details (csv)"
+```
+
 ### Local Development
 
 Install dependencies:
