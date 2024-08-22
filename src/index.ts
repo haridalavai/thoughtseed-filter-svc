@@ -5,7 +5,7 @@ import { client } from "./lib/redis-client";
 
 const app = new Hono();
 
-app.get("/", async (c) => {
+app.get("/filter", async (c) => {
   try {
     const queryParam = c.req.query();
     const filteredInfluencers = await filterV1(queryParam);
