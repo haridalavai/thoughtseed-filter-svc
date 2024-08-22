@@ -11,6 +11,18 @@ import {
   InfluenceScoreFilter,
 } from "./filters";
 
+/**
+ *
+ * @param query
+ * @returns Promise<Influencer[]>
+ * @description This function filters influencers based on the query parameters provided.
+ * The function first checks if the filtered influencers are cached in Redis. If they are, it returns the cached influencers.
+ * If not, it loads the influencers from S3, creates a filter chain, applies the filters based on the query parameters, caches the filtered influencers in Redis, and returns the filtered influencers.
+ * If an error occurs, it throws the error.
+ * @example
+ * const filteredInfluencers = await filterV1({ min_followers: 1000000 });
+ */
+
 export async function filterV1(
   query: Record<string, any>
 ): Promise<Influencer[]> {
@@ -42,6 +54,14 @@ export async function filterV1(
   }
 }
 
+/**
+ *
+ * @param query
+ * @returns IFilter<Influencer>[]
+ * @description This function creates filters based on the query parameters provided.
+ * @example
+ * const filters = createFiltersFromQuery({ min_followers: 1000000 });
+ */
 function createFiltersFromQuery(
   query: Record<string, any>
 ): IFilter<Influencer>[] {

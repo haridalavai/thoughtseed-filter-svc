@@ -5,6 +5,15 @@ import { client } from "./lib/redis-client";
 
 const app = new Hono();
 
+/**
+ * @description filter endpoint
+ * @method GET
+ * @param query
+ * @returns influencers
+ * @example
+ * GET /filter?min_followers=1000000
+ */
+
 app.get("/filter", async (c) => {
   try {
     const queryParam = c.req.query();
