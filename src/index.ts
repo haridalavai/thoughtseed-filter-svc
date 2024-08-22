@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import { handle } from "hono/aws-lambda";
 import { filterV1 } from "./v1/filter";
+import { client } from "./lib/redis-client";
 
 const app = new Hono();
 

@@ -1,3 +1,4 @@
+import { client } from "../../lib/redis-client";
 import { Influencer } from "../../types/influencer";
 import { s3CSVLoader } from "../../utils";
 
@@ -14,9 +15,15 @@ export async function filterV1(
   query: Record<string, any>
 ): Promise<Influencer[]> {
   try {
+    const cachedInfluencers = await client.get(JSON.stringify(query));
+
+    if (cachedInfluencers) {
+      return JSON.parse(cachedInfluencers);
+    }
+
     const influencers: Influencer[] = await s3CSVLoader({
-      Bucket: "thoughtseed-influencers",
-      Key: "top_insta_influencers_data.csv",
+      Bucket: process.env.INFLUENCERS_BUCKET!,
+      Key: process.env.INFLUENCERS_KEY!,
     });
 
     const filterChain = new FilterChain<Influencer>();
@@ -26,6 +33,8 @@ export async function filterV1(
     filters.forEach((filter) => filterChain.addFilter(filter));
 
     const filteredInfluencers = filterChain.applyFilters(influencers);
+
+    client.set(JSON.stringify(query), JSON.stringify(filteredInfluencers));
 
     return filteredInfluencers;
   } catch (err: any) {
