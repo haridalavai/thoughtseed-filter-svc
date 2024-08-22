@@ -20,5 +20,12 @@
     "typeRoots": ["./node_modules/@types"],
     "esModuleInterop": true
   },
-  "exclude": ["node_modules", "cdk.out"]
+  "exclude": [
+    "node_modules",
+    "cdk.out",
+    "./coverage",
+    "./dist",
+    "__tests__",
+    "jest.config.js"
+  ]
 }
